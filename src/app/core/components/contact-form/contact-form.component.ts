@@ -13,9 +13,10 @@ export class ContactFormComponent implements OnInit, OnChanges {
 
   @Input() contact: Contact = {
     id: undefined,
-    name: '',
+    avatar: '',
+    first_name: '',
+    last_name: '',
     email: '',
-    phone: ''
   };
 
   @Output() save = new EventEmitter<Contact>();
@@ -25,9 +26,10 @@ export class ContactFormComponent implements OnInit, OnChanges {
   constructor(public formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
       id: [this.contact.id],
-      name: [this.contact.name, Validators.required],
+      avatar: [this.contact.avatar],
+      first_name: [this.contact.first_name, Validators.required],
+      last_name: [this.contact.last_name, Validators.required],
       email: [this.contact.email, Validators.required],
-      phone: [this.contact.phone]
     });
   }
 

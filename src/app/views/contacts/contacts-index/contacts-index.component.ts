@@ -13,10 +13,13 @@ import { ContactsStoreFacade } from '@app/contacts-store/contacts.store-facade';
 export class ContactsIndexComponent implements OnInit {
 
   contacts$ = this.contactsFacade.contacts$;
+  pagination$ = this.contactsFacade.pagination$;
 
   constructor(private contactsFacade: ContactsStoreFacade, private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contactsFacade.loadContactsPerPage(1, 6);
+  }
 
   editContact(contact: Contact) {
     this.router.navigate(['/contacts', contact.id, 'edit']);
@@ -31,6 +34,10 @@ export class ContactsIndexComponent implements OnInit {
     if (r) {
       this.contactsFacade.deleteContact(contact.id);
     }
+  }
+
+  updateContact(page: number) {
+    this.contactsFacade.loadContactsPerPage(page, 6);
   }
 
 }
