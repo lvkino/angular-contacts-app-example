@@ -15,8 +15,8 @@ import {
   createSuccess,
   failure,
   load,
-  loadAll,
-  loadAllSuccess,
+  loadPerPage,
+  loadPerPageSuccess,
   loadSuccess,
   remove,
   removeSuccess,
@@ -34,14 +34,13 @@ import {
 export class ContactsEffects {
 
 
-  loadAll$ = createEffect( () => this.actions$.pipe(
-    ofType(loadAll), /* When action is dispatched */
-    startWith(loadAll()),
+  loadPerPage$ = createEffect( () => this.actions$.pipe(
+    ofType(loadPerPage), /* When action is dispatched */
     /* Hit the Contacts Index endpoint of our REST API */
-    /* Dispatch LoadAllSuccess action to the central store with id list returned by the backend as id*/
+    /* Dispatch loadPerPageSuccess action to the central store with id list returned by the backend as id*/
     /* 'Contacts Reducers' will take care of the rest */
-    switchMap(() => this.contactsService.index().pipe(
-      map(contacts => loadAllSuccess({contacts}))
+    switchMap(({page, perPage}) => this.contactsService.index(page, perPage).pipe(
+      map(({contacts, paginationConfig}) => loadPerPageSuccess({contacts, paginationConfig}))
     )),
   ));
 
@@ -55,7 +54,7 @@ export class ContactsEffects {
   ));
 
 
-  create$ = createEffect( () =>this.actions$.pipe(
+  create$ = createEffect( () => this.actions$.pipe(
     ofType(create),
     pluck('contact'),
     switchMap( contact => this.contactsService.create(contact).pipe(
@@ -80,8 +79,9 @@ export class ContactsEffects {
     ofType(remove),
     pluck('id'),
     switchMap( id => this.contactsService.destroy(id).pipe(
-      pluck('id'),
-      map(id => removeSuccess({id}))
+      map(() => {
+        return removeSuccess({id});
+      })
     ))
   ));
 

@@ -6,12 +6,16 @@ export class ContactsServiceMock {
 
   contacts = [{
     id: 1,
-    name: 'john',
-    email: 'john@gmail.com'
+    first_name: 'john',
+    last_name: 'Doe',
+    email: 'john@gmail.com',
+    avatar: 'john.jpg'
   }, {
     id: 2,
-    name: 'adam',
-    email: 'adam@gmail.com'
+    first_name: 'adam',
+    last_name: 'doe',
+    email: 'adam@gmail.com',
+    avatar: 'adam.jpg'
   }];
 
   index(): Observable<Contact[]> {
@@ -21,8 +25,10 @@ export class ContactsServiceMock {
   show(conactId: number): Observable<Contact> {
     return of({
       id: 1,
-      name: 'john',
-      email: 'john@gmail.com'
+      first_name: 'john',
+      last_name: 'john',
+      email: 'john@gmail.com',
+      avatar: 'avatar.jpg'
     });
   }
 
