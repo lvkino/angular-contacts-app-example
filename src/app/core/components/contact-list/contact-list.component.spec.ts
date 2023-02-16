@@ -6,6 +6,7 @@ import { Contact } from '@app/core/models';
 describe('ContactListComponent', () => {
   let component: ContactListComponent;
   let fixture: ComponentFixture<ContactListComponent>;
+  const event = new MouseEvent('click');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -63,5 +64,34 @@ describe('ContactListComponent', () => {
     component.deleteContact(contact);
     expect(component.remove.emit).toHaveBeenCalledWith(contact);
   });
+
+  describe('When changePage calls', () => {
+
+    beforeEach(() => {
+      spyOn(component.page, 'emit');
+      component.pagination = {
+        page: 1,
+        per_page: 6,
+        total_pages: 2
+      };
+    });
+
+    it('should call page.emit when another page is available', () => {
+      component.changePage(event, 2);
+      expect(component.page.emit).toHaveBeenCalledWith(2);
+    });
+
+    it('should not call page.emit when another page is not available', () => {
+      component.changePage(event, 3);
+      expect(component.page.emit).not.toHaveBeenCalled();
+    });
+
+    it('should not call page.emit when the page is less than 1', () => {
+      component.changePage(event, 0);
+      expect(component.page.emit).not.toHaveBeenCalled();
+    });
+
+  });
+
 });
 

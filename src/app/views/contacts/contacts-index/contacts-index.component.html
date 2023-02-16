@@ -5,7 +5,7 @@
 
 <app-contact-list [contacts]="contacts$ | async"
                   [pagination]="pagination$ | async"
-                  (page)="updateContact($event)"
+                  (page)="updateContacts($event)"
                   (show)="showContact($event)"
                   (remove)="deleteContact($event)"
                   (edit)="editContact($event)"

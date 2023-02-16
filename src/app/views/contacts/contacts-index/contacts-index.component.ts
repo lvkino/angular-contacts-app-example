@@ -36,7 +36,7 @@ export class ContactsIndexComponent implements OnInit {
     }
   }
 
-  updateContact(page: number) {
+  updateContacts(page: number) {
     this.contactsFacade.loadContactsPerPage(page, 6);
   }
 

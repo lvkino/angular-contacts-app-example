@@ -88,4 +88,10 @@ describe('ContactsIndexComponent', () => {
     });
     expect(contactsFacade.deleteContact).toHaveBeenCalledWith(1);
   });
+  it('should call contactsFacade.loadContactsPerPage when updateContacts calls', () => {
+
+    spyOn(contactsFacade, 'loadContactsPerPage');
+    component.updateContacts(1);
+    expect(contactsFacade.loadContactsPerPage).toHaveBeenCalledWith(1, 6);
+  });
 });
