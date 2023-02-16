@@ -1,9 +1,12 @@
 <h1> Contact list</h1>
 
+<app-filter-list 
+    [list]="contacts$ | async" 
+    (filter)="updateFilteredContacts($event)"
+    [doNotFilterPropertyList]="doNotFilterPropertyList">
+</app-filter-list>
 
-
-
-<app-contact-list [contacts]="contacts$ | async"
+<app-contact-list [contacts]="filteredContacts"
                   [pagination]="pagination$ | async"
                   (page)="updateContacts($event)"
                   (show)="showContact($event)"

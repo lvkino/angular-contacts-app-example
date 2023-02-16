@@ -12,7 +12,6 @@ import {SocketIoModule} from 'ngx-socket-io';
 import {ServiceWorkerModule } from '@angular/service-worker';
 import {environment} from '@app/env';
 import {ROOT_REDUCERS} from '@app/root-store';
-import { FilterListModule } from './filter-list/filter-list.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { FilterListModule } from './filter-list/filter-list.module';
     ReactiveFormsModule,
     HttpClientModule,
     SocketIoModule,
-    FilterListModule,
     StoreModule.forRoot(ROOT_REDUCERS), /* Initialise the Central Store with Application's main reducer*/
     EffectsModule.forRoot([]), /* Start monitoring app's side effects */
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],

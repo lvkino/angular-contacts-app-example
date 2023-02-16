@@ -14,12 +14,14 @@ import {ContactsStoreFacade} from '@app/contacts-store/contacts.store-facade';
 import {reducers} from '@app/contacts-store';
 import {ContactsSocketService} from './services/contacts-socket.service';
 import {ContactsService} from './services/contacts.service';
+import { FilterListModule } from './../../filter-list/filter-list.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    FilterListModule,
     ContactsRoutingModule,
     StoreModule.forFeature('contacts', reducers),
     EffectsModule.forFeature([ContactsEffects])
