@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import {ContactsService} from '../services/contacts.service';
 import {ContactsSocketService} from '../services/contacts-socket.service';
 import {ROOT_REDUCERS} from '@app/root-store';
+import { Contact } from '@app/core/models';
 
 
 describe('ContactNewComponent', () => {
@@ -62,9 +63,11 @@ describe('ContactNewComponent', () => {
   it('should call contactsFacade.createContact and router.navigate when submitted calls', () => {
     spyOn(contactsFacade, 'createContact');
     spyOn(router, 'navigate');
-    const contact = {
+    const contact: Contact = {
       id: 1,
-      name: 'test',
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
       email: 'test@avatsaev.com'
     };
     component.submitted(contact);

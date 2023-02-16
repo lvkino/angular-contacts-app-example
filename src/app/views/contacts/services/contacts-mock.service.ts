@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { Contact } from '@app/core/models';
+import { Contact, PaginationConfig } from '@app/core/models';
 
 
 export class ContactsServiceMock {
@@ -18,8 +18,20 @@ export class ContactsServiceMock {
     avatar: 'adam.jpg'
   }];
 
-  index(): Observable<Contact[]> {
-   return of(this.contacts);
+  paginationConfig: {
+    page: 1,
+    per_page: 6,
+    total_pages: 2
+  };
+
+  index(): Observable<{
+    contacts: Contact[],
+    paginattionConfig: PaginationConfig
+  }> {
+    return of({
+      contacts: this.contacts,
+      paginattionConfig: this.paginationConfig
+    });
   }
 
   show(conactId: number): Observable<Contact> {
@@ -35,7 +47,9 @@ export class ContactsServiceMock {
   create(contact: Contact) {
     return of({
       id: 4,
-      name: 'john doe',
+      avatar: 'avatar.jpg',
+      first_name: 'john',
+      last_name: 'doe',
       email: 'john@gmail.com'
     });
   }

@@ -50,14 +50,26 @@ describe('ContactsIndexComponent', () => {
   it('should call contactsFacade.setCurrentContactId and router.navigate when editContact calls', () => {
 
     spyOn(router, 'navigate');
-    component.editContact({id: 1, name: 'test', email: 'test@avatsaev.com'});
+    component.editContact({
+      id: 1,
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
+      email: 'test@avatsaev.com'
+    });
     expect(router.navigate).toHaveBeenCalledWith(['/contacts', 1, 'edit']);
   });
 
   it('should call contactsFacade.setCurrentContactId and router.navigate when showContact calls', () => {
 
     spyOn(router, 'navigate');
-    component.showContact({id: 1, name: 'test', email: 'test@avatsaev.com'});
+    component.showContact({
+      id: 1,
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
+      email: 'test@avatsaev.com'
+    });
 
     expect(router.navigate).toHaveBeenCalledWith(['/contacts', 1]);
   });
@@ -67,7 +79,13 @@ describe('ContactsIndexComponent', () => {
       return true;
     });
     spyOn(contactsFacade, 'deleteContact');
-    component.deleteContact({id: 1, name: 'test', email: 'test@avatsaev.com'});
+    component.deleteContact({
+      id: 1,
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
+      email: 'test@avatsaev.com'
+    });
     expect(contactsFacade.deleteContact).toHaveBeenCalledWith(1);
   });
 });

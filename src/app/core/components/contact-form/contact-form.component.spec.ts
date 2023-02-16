@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactFormComponent } from './contact-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Contact } from '@app/core/models';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -31,9 +32,11 @@ describe('ContactFormComponent', () => {
 
   it('should call form.patchValue when ngOnChanges calls', () => {
     spyOn(component.form, 'patchValue');
-    const contact = {
+    const contact: Contact = {
       id: 1,
-      name: 'test',
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
       email: 'test@avatsaev.com'
     };
     component.contact = contact;
@@ -43,11 +46,12 @@ describe('ContactFormComponent', () => {
 
   it('should call save.emit when submit calls', () => {
     spyOn(component.save, 'emit');
-    const contact = {
+    const contact: Contact = {
       id: 1,
-      name: 'test',
-      email: 'test@avatsaev.com',
-      phone: '12345'
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
+      email: 'test@avatsaev.com'
     };
     component.form.setValue(contact);
     component.submit();

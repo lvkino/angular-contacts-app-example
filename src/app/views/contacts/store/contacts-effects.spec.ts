@@ -10,8 +10,8 @@ import {ContactsSocketService} from '../services/contacts-socket.service';
 import {
   create, createSuccess,
   load,
-  loadAll,
-  loadAllSuccess,
+  loadPerPage,
+  loadPerPageSuccess,
   loadSuccess,
   remove,
   removeSuccess, update, updateSuccess
@@ -37,21 +37,29 @@ describe('Contacts Effects', () => {
   });
 
 
-  it('should dispatch LoadAllSuccess Action when the contacts are fetched from server', () => {
-    const actionDispatched = loadAll();
-    const actionExpected = loadAllSuccess({contact: contactsService.contacts});
+  it('should dispatch loadPerPageSuccess Action when the contacts are fetched from server', () => {
+    const actionDispatched = loadPerPage({
+      page: 1,
+      perPage: 6
+    });
+    const actionExpected = loadPerPageSuccess({
+      contacts: contactsService.contacts,
+      paginationConfig: contactsService.paginationConfig
+    });
 
     actions$ = hot('--a-', { a: actionDispatched });
     const expected = cold('--b', { b: actionExpected });
-    expect(effects.loadAll$).toBeObservable(expected);
+    expect(effects.loadPerPage$).toBeObservable(expected);
   });
 
   it('should dispatch LoadSuccess Action when specific contact is fetched', () => {
     const actionDispatched = load({id: 1});
     const actionExpected = loadSuccess({contact: {
       id: 1,
-      name: 'john',
-      email: 'john@gmail.com'
+      first_name: 'john',
+      last_name: 'john',
+      email: 'john@gmail.com',
+      avatar: 'avatar.jpg'
     }});
 
     actions$ = hot('--a-', { a: actionDispatched });
@@ -71,12 +79,16 @@ describe('Contacts Effects', () => {
   it('should dispatch CreateSuccess Action when specific contact is created', () => {
     const actionDispatched = create({contact: {
       id: 4,
-      name: 'john doe',
+      avatar: 'avatar.jpg',
+      first_name: 'john',
+      last_name: 'doe',
       email: 'john@gmail.com'
     }});
     const actionExpected = createSuccess({contact: {
       id: 4,
-      name: 'john doe',
+      avatar: 'avatar.jpg',
+      first_name: 'john',
+      last_name: 'doe',
       email: 'john@gmail.com'
     }});
 
@@ -89,13 +101,17 @@ describe('Contacts Effects', () => {
 
     const actionDispatched = update({contact: {
       id: 4,
-      name: 'john doe',
+      avatar: 'avatar.jpg',
+      first_name: 'john',
+      last_name: 'doe',
       email: 'john@gmail.com'
     }});
 
     const actionExpected = updateSuccess({contact: {
       id: 4,
-      name: 'john doe',
+      avatar: 'avatar.jpg',
+      first_name: 'john',
+      last_name: 'doe',
       email: 'john@gmail.com'
     }});
 
