@@ -12,8 +12,6 @@
       {{ pagination.page }}
       <button (click)="changePage($event, pagination.page + 1)" class="btn btn-outline-primary mb-1 btn-sm">&gt;</button>
       of {{ pagination.total_pages }}
-      <br>
-      Result per page {{ pagination.per_page }}
     </th>
   </tr>
   </thead>
