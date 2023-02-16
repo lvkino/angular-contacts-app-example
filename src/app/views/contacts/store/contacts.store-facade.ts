@@ -4,7 +4,7 @@ import * as fromContacts from '@app/contacts-store';
 import { select, Store } from '@ngrx/store';
 
 import { Contact } from '@app/core/models';
-import {create, load, remove, update} from '@app/contacts-store/contacts-actions';
+import {create, load, remove, update, loadPerPage} from '@app/contacts-store/contacts-actions';
 
 @Injectable()
 export class ContactsStoreFacade {
@@ -13,7 +13,15 @@ export class ContactsStoreFacade {
     select(fromContacts.getAllContacts)
   );
 
+  pagination$ = this.store.pipe(
+    select(fromContacts.getPaginationConfigState)
+  );
+
   constructor(private store: Store<fromRoot.State>) { }
+
+  loadContactsPerPage(page: number, perPage: number) {
+    this.store.dispatch(loadPerPage({page, perPage}));
+  }
 
   loadContact(id: number) {
     this.store.dispatch(load({id}));
@@ -34,6 +42,6 @@ export class ContactsStoreFacade {
   getContactById(id: number) {
     return this.store.pipe(
       select(fromContacts.getContactById(id))
-    )
+    );
   }
 }

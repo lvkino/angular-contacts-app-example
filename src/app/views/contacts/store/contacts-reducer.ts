@@ -1,9 +1,9 @@
-import { Contact } from '@app/core/models';
+import { Contact, PaginationConfig } from '@app/core/models';
 import {EntityState, createEntityAdapter} from '@ngrx/entity';
 import {createReducer, on} from '@ngrx/store';
 import {
   createSuccess,
-  loadAllSuccess,
+  loadPerPageSuccess,
   loadSuccess, removeSuccess,
   updateSuccess
 } from '@app/contacts-store/contacts-actions';
@@ -26,17 +26,25 @@ export const contactsAdapter = createEntityAdapter<Contact>({
 // -> entities map allows us to access the data quickly without iterating/filtering though an array of objects
 
 export interface State extends EntityState<Contact> {
-  // additional props here
+  paginationConfig: PaginationConfig;
 }
 
 export const INIT_STATE: State = contactsAdapter.getInitialState({
-  // additional props default values here
+  paginationConfig: {
+    page: 1,
+    per_page: 6,
+    total_pages: 1,
+  }
 });
 
 export const reducer = createReducer<State>(
   INIT_STATE,
-  on(loadAllSuccess, (state, {contacts}) =>
-    contactsAdapter.addAll(contacts, state)
+  on(loadPerPageSuccess, (state, {contacts, paginationConfig}) => {
+    return contactsAdapter.addAll(contacts, {
+      ...state,
+      paginationConfig,
+    });
+  }
   ),
   on(loadSuccess, (state, {contact}) =>
     contactsAdapter.upsertOne(contact, state)
@@ -47,8 +55,9 @@ export const reducer = createReducer<State>(
   on(updateSuccess, (state, {contact}) =>
     contactsAdapter.updateOne({id: contact.id, changes: contact}, state)
   ),
-  on(removeSuccess, (state, {id}) =>
-    contactsAdapter.removeOne(id, state)
+  on(removeSuccess, (state, {id}) => {
+    return contactsAdapter.removeOne(id, state);
+  }
   )
 );
 

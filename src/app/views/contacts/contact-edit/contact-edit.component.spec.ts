@@ -12,7 +12,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ContactsService} from '../services/contacts.service';
 import {ContactsSocketService} from '../services/contacts-socket.service';
 import {ROOT_REDUCERS} from '@app/root-store';
-
+import { Contact } from '@app/core/models';
 
 
 describe('ContactEditComponent', () => {
@@ -56,9 +56,11 @@ describe('ContactEditComponent', () => {
 
   it('should call contactsFacade.updateContact when submitted calls', () => {
     spyOn(contactsFacade, 'updateContact');
-    const contact = {
+    const contact: Contact = {
       id: 1,
-      name: 'test',
+      avatar: 'test',
+      first_name: 'test',
+      last_name: 'test',
       email: 'test@avatsaev.com'
     };
     component.submitted(contact);

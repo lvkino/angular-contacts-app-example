@@ -9,7 +9,7 @@ export interface ContactsState {
 export function reducers(state: ContactsState | undefined, action: Action) {
   return combineReducers({
     contacts: fromContacts.reducer
-  })(state, action)
+  })(state, action);
 }
 
 
@@ -23,6 +23,11 @@ export const getContactsState = createFeatureSelector<ContactsState>('contacts')
 export const getContactsEntitiesState = createSelector(
   getContactsState,
   state => state.contacts
+);
+
+export const getPaginationConfigState = createSelector(
+  getContactsState,
+  state => state.contacts.paginationConfig
 );
 
 export const {
