@@ -14,11 +14,16 @@ export class ContactsIndexComponent implements OnInit {
 
   contacts$ = this.contactsFacade.contacts$;
   pagination$ = this.contactsFacade.pagination$;
+  filteredContacts: Contact[];
+  doNotFilterPropertyList = ['avatar'];
 
   constructor(private contactsFacade: ContactsStoreFacade, private router: Router) { }
 
   ngOnInit() {
     this.contactsFacade.loadContactsPerPage(1, 6);
+    this.contacts$.subscribe(contacts => {
+      this.filteredContacts = contacts;
+    });
   }
 
   editContact(contact: Contact) {
@@ -38,6 +43,10 @@ export class ContactsIndexComponent implements OnInit {
 
   updateContacts(page: number) {
     this.contactsFacade.loadContactsPerPage(page, 6);
+  }
+
+  updateFilteredContacts(contacts: Contact[]) {
+    this.filteredContacts = contacts;
   }
 
 }
